@@ -46,9 +46,15 @@ filtered_comments$comments # Display the filtered comments by NUFORC.
 ufo <- ufo %>%
   mutate(is_hoax = grepl("hoax|false|fake|not real", comments, ignore.case = TRUE)). # Use mutate() and grepl to search for comments that include "hoax", "false", "fake", "not real", ignore case and create new Boolean column titled "is_hoax". 
 sum(ufo$is_hoax == TRUE) # Count number of comments that contain these words, identifying as possible hoax. 
+View(ufo) # Updated dataset 
 
 # 8. Create a table reporting the percentage of hoax sightings per country.
-table
+hoax_percentage <- ufo %>%
+  group_by(country) %>%
+  summarize(percentage_hoax = mean(is_hoax) * 100)
+View(hoax_percentage) # View table form in new tab. 
+print(hoax_percentage) # View table form in output in console. 
+
 # 9. Add another column to the dataset (report_delay) and populate with the time difference in days, between the date of the sighting and the date it was reported.
 # 10. Remove the rows where the sighting was reported before it happened.
 # 11. Create a table reporting the average report_delay per country.
